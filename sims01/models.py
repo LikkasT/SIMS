@@ -69,7 +69,7 @@ class Ship(models.Model):
 class Province(models.Model):
     ProvinceID = models.AutoField('省份ID', primary_key=True)
     ProvinceName = models.CharField('省份名称', max_length=30, null=True)
-    Belonging = models.ForeignKey('Nation', on_delete=models.PROTECT, null=True)
+    Belonging = models.ForeignKey('Nation', on_delete=models.CASCADE, null=True)
 
 
 class PortType(models.Model):
