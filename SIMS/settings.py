@@ -37,8 +37,20 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'django.contrib.gis',
     'sims01'
 ]
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.contrib.gis.db.backends.mysql',
+#         'NAME': 'your_database_name',
+#         'USER': 'your_username',
+#         'PASSWORD': 'your_password',
+#         'HOST': 'your_host',
+#         'PORT': 'your_port',
+#     }
+# }
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
