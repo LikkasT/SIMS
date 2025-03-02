@@ -93,7 +93,7 @@ WSGI_APPLICATION = "SIMS.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.mysql',
-        'NAME': 'doking',
+        'NAME': 'docking',
         'USER': 'root',
         'PASSWORD': 'Szc#030609',
         'HOST': 'localhost',
