@@ -45,7 +45,7 @@ class Nation(models.Model):
     CountryCode = models.CharField('国家代码', max_length=10, primary_key=True)
     CountryName = models.CharField('国家名称', max_length=20, null=False)
     CountryEnName = models.CharField('国家英文', max_length=56, null=False)
-    TimeZone = models.IntegerField('时区', null=False, max_length=3)
+    TimeZone = models.IntegerField('时区', null=False)
 
 
 class Ship(models.Model):
@@ -74,7 +74,7 @@ class Province(models.Model):
 
 class PortType(models.Model):
     PortTypeID = models.AutoField('港口类型ID', primary_key=True)
-    PortTypeFlag = models.IntegerField('港口类型类别', null=False, max_length=2)
+    PortTypeFlag = models.IntegerField('港口类型类别', null=False)
     PortTypeMessage = models.CharField('港口类型信息', max_length=20, null=False)
 
 
@@ -87,15 +87,15 @@ class Port(models.Model):
     PortGeom = models.GeometryField('港口范围', null=True)
     PortLevel = models.CharField('港口级别', max_length=30, null=True)
     PortUpdateTime = models.DateTimeField('港口数据更新时间', auto_now=True)
-    PortDataState = models.CharField('港口数据状态', max_length=1, null=False, default='N', choices=[('NEW', 'N'), ('MODIFIED', 'M'), ('DELETED', 'D')])
-    PortState = models.CharField('港口状态', max_length=1, null=False, default='F', choices=[('FREE', 'F'), ('OCCUPATION', 'O'), ('DISUSE', 'D')])
+    PortDataState = models.CharField('港口数据状态', max_length=8, null=False, default='N', choices=[('NEW', 'N'), ('MODIFIED', 'M'), ('DELETED', 'D')])
+    PortState = models.CharField('港口状态', max_length=10, null=False, default='F', choices=[('FREE', 'F'), ('OCCUPATION', 'O'), ('DISUSE', 'D')])
     PortEnName = models.CharField('港口英文名', max_length=60)
     PortLength = models.DecimalField('港口长', max_digits=10, decimal_places=2)
     PortWidth = models.DecimalField('港口宽', max_digits=10, decimal_places=2)
-    BerthsNumber = models.IntegerField('泊位数量',max_length=5)
+    BerthsNumber = models.IntegerField('泊位数量')
     PortBindingFlag = models.BooleanField('港口账号是否绑定用户', null=False, default=False)
     Belonging = models.ForeignKey('Province', on_delete=models.PROTECT, null=False)
-    Type = models.ManyToManyField('PortType', on_delete=models.SET_NULL, null=True)
+    Type = models.ManyToManyField('PortType')
     PortBindingUser = models.OneToOneField('User', on_delete=models.SET_NULL, null=True)
 
 
@@ -108,22 +108,22 @@ class Berths(models.Model):
     BerthLon = models.DecimalField('泊位位置经度', max_digits=9, decimal_places=6)
     BerthLat = models.DecimalField('泊位位置纬度', max_digits=9, decimal_places=6)
     BerthLength = models.DecimalField('泊位长度', max_digits=6, decimal_places=2)
-    BerthCapacity = models.IntegerField('泊位容量', max_length=10)
-    DesignDepth = models.IntegerField('设计水深', max_length=4)
-    ActualDepth = models.IntegerField('实际水深', max_length=4)
+    BerthCapacity = models.IntegerField('泊位容量')
+    DesignDepth = models.IntegerField('设计水深')
+    ActualDepth = models.IntegerField('实际水深')
     TurningDepth = models.DecimalField('转船深度', max_digits=5, decimal_places=2)
-    TurningArea = models.IntegerField('转船区域', max_length=6)
-    FairwayDepth = models.IntegerField('航道水深', max_length=4, null=True)
+    TurningArea = models.IntegerField('转船区域')
+    FairwayDepth = models.IntegerField('航道水深', null=True)
     BerthMeasureDate = models.DateTimeField('泊位数据测量日期', null=True, blank=True)
     BerthRemark = models.TextField('泊位备注', null=True, blank=True)
-    BerthPerimeter = models.IntegerField('泊位周长', max_length=6, null=True)
+    BerthPerimeter = models.IntegerField('泊位周长', null=True)
     BerthGeom = models.GeometryField('泊位范围', null=True, blank=True)
     LoadingFlag = models.BooleanField('到货情况', default=False)
     ProductType = models.CharField('发货类型', max_length=30, null=True)
     BerthDataUpdateTime =models.DateTimeField('泊位数据更新时间',auto_now=True)
     DeleteFlag = models.BooleanField('删除标记', default=False)
     CreateTime = models.DateTimeField('首次入库时间', null=True)
-    BerthState = models.CharField('泊位状态', max_length=1, null=False, default='F', choices=[('FREE', 'F'), ('OCCUPATION', 'O'), ('DISUSE', 'D')])
+    BerthState = models.CharField('泊位状态', max_length=10, null=False, default='F', choices=[('FREE', 'F'), ('OCCUPATION', 'O'), ('DISUSE', 'D')])
     Port = models.ForeignKey('Port', on_delete=models.CASCADE, null=False)
 
 
@@ -146,7 +146,7 @@ class Application(models.Model):
     ApplicationID = models.AutoField('申请ID', primary_key=True)
     ApplicationText = models.TextField('文字内容', null=True, blank=True)
     ApplicationPic = models.ImageField('申请图片信息', upload_to='static/img/application', null=True, blank=True)
-    ApplicationFlag = models.CharField('审核结果', max_length=1, null=False, default='U', choices=[('UNREAD', 'U'), ('ADOPT', 'A'), ('REFUSE', 'R')])
+    ApplicationFlag = models.CharField('审核结果', max_length=6, null=False, default='U', choices=[('UNREAD', 'U'), ('ADOPT', 'A'), ('REFUSE', 'R')])
     Manager = models.ForeignKey('Manager', on_delete=models.SET_NULL, null=True, blank=True)
     Permission = models.ForeignKey('Permission', on_delete=models.SET_NULL, null=True, blank=True)
     User = models.ForeignKey('User', on_delete=models.SET_NULL, null=True)

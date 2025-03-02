@@ -11,6 +11,18 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+
+if os.name == 'nt':
+    import platform
+    GDAL_DIR = r"C:\Program Files\GDAL"
+    assert os.path.isdir(GDAL_DIR), "Directory does not exist: " + GDAL_DIR
+    os.environ['OSGEO4W_ROOT'] = GDAL_DIR
+    os.environ['GDAL_DATA'] = os.path.join(GDAL_DIR, "gdal-data")
+    os.environ['PROJ_LIB'] = os.path.join(GDAL_DIR, "projlib")
+    os.environ['PATH'] = GDAL_DIR + ";" + os.environ['PATH']
+    # 根据实际的版本号修改 .dll 文件名
+    GDAL_LIBRARY_PATH = os.path.join(GDAL_DIR, "gdal.dll")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -79,9 +91,13 @@ WSGI_APPLICATION = "SIMS.wsgi.application"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'django.contrib.gis.db.backends.mysql',
+        'NAME': 'doking',
+        'USER': 'root',
+        'PASSWORD': 'Szc#030609',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 # DATABASES = {

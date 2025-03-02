@@ -19,6 +19,6 @@ from django.urls import path
 from sims01 import views
 
 urlpatterns = [
-    # path("admin/", admin.site.urls),
-    path('index/', views.)
+    path("admin/", admin.site.urls),
+    # path('index/', views.)
 ]
